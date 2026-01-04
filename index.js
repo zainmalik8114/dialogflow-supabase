@@ -2,9 +2,9 @@ const dialogflow = require("@google-cloud/dialogflow");
 const { WebhookClient, Payload, Button } = require("dialogflow-fulfillment");
 const express = require("express");
 const nodemailer = require("nodemailer");
-const { createClient } = require('@supabase/supabase-js');
 const cors = require("cors");
-const supabase = createClient('Supabase URL', 'Supabase Anon Key');
+const { createClient } = require('@supabase/supabase-js');
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
 const app = express();
 app.use(express.json());
@@ -16,7 +16,6 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-
 app.post("/webhook", async (req, res) => {
   var id = res.req.body.session.substr(43);
   console.log(id);
@@ -27,7 +26,6 @@ app.post("/webhook", async (req, res) => {
     agent.add(
       "Hi I am the AI assistant of dialogflow, You can also connect with human directly"
     );
-
   }
 
   async function booking(agent) {
